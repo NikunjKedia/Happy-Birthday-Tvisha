@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Surprise for Tvisha!</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0 }
+    html, body {
+      width:100%; height:100%;
+      overflow:hidden;
+      font-family:'Quicksand',sans-serif;
+    }
+    section {
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      transition:opacity 0.6s ease;
+    }
+    section.hidden { opacity:0; pointer-events:none; }
+
+    /*–––– Gift Section –––––*/
+    #giftPage {
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    }
+    #giftPage .particles, #giftPage .particles span {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      pointer-events:none;
+    }
+    #giftPage .particles span {
+      color:rgba(255,255,255,0.8);
+      animation:floatUp 7s linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform:translateY(100vh) scale(0.3); opacity:0 }
+      50%  { opacity:1 }
+      100% { transform:translateY(-10vh) scale(1); opacity:0 }
+    }
+    #giftPage #gift {
+      font-size:6rem; cursor:pointer;
+      animation:bounce 2s ease infinite;
+      z-index:10; user-select:none;
+    }
+    @keyframes bounce {
+      50% { transform:translateY(-20px) }
+    }
+    #giftPage #letter {
+      position:absolute; max-width:500px; padding:2rem;
+      background:rgba(255,255,255,0.95); border-radius:12px;
+      text-align:center; opacity:0; transition:opacity 0.5s ease;
+      pointer-events:none; z-index:5;
+    }
+    #giftPage .line {
+      opacity:0; transform:translateY(20px);
+      margin:1rem 0;
+      transition:opacity 0.8s ease, transform 0.8s ease;
+      font-size:1.2rem; line-height:1.6rem;
+    }
+    #giftPage .line.visible {
+      opacity:1; transform:translateY(0);
+    }
+    #giftPage .signature {
+      margin-top:1.5rem;
+      font-family:'Pacifico',cursive; font-size:1.1rem; color:#666;
+    }
+    #giftPage #proceed {
+      margin-top:2rem; opacity:0; transform:translateY(20px);
+      padding:0.6rem 1.2rem; border:none; border-radius:6px;
+      background:#fff; color:#333; cursor:pointer;
+      transition:opacity 0.8s ease, transform 0.8s ease;
+      pointer-events:none;
+    }
+    #giftPage #proceed.visible {
+      opacity:1; transform:translateY(0); pointer-events:auto;
+    }
+    #giftPage #proceed:hover { background:#f0f0f0; }
+
+    /*–––– Gallery Section –––––*/
+    #galleryPage {
+      flex-direction:column; padding:2rem;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      color:#fff;
+    }
+    #galleryPage h1 {
+      font-family:'Pacifico',cursive; font-size:2.8rem;
+      text-shadow:0 0 8px rgba(255,255,255,0.8);
+      margin-bottom:1.5rem;
+    }
+    #galleryPage .gallery {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:1rem; width:100%; max-width:900px;
+      margin-bottom:2rem;
+    }
+    #galleryPage .media {
+      background:#eee; border-radius:8px; overflow:hidden;
+      opacity:0; transform:translateY(20px);
+      animation:fadeInUp 1s forwards;
+    }
+    #galleryPage .media:nth-child(1){ animation-delay:0.3s }
+    #galleryPage .media:nth-child(2){ animation-delay:0.6s }
+    @keyframes fadeInUp {
+      to { opacity:1; transform:translateY(0) }
+    }
+    #galleryPage .media img,
+    #galleryPage .media video {
+      width:100%; display:block;
+    }
+    #galleryPage .nav button {
+      padding:0.8rem 1.6rem; background:#fff; color:#333;
+      border:none; border-radius:6px; cursor:pointer;
+      font-family:'Quicksand',sans-serif;
+      box-shadow:0 2px 6px rgba(0,0,0,0.2);
+      transition:background 0.3s;
+    }
+    #galleryPage .nav button:hover { background:#f0f0f0 }
+  </style>
+</head>
+<body>
+
+  <!-- single audio -->
+  <audio id="bg" src="instrumental-undertone.mp3" loop></audio>
+
+  <!--–––– Gift Page ––––-->
+  <section id="giftPage">
+    <div class="particles"></div>
+    <div id="gift" onclick="startLetter()">🎁</div>
+    <div id="letter">
+      <p class="line">Dear T,</p>
+      <p class="line">Thank you for calming me when I cried.</p>
+      <p class="line">You stayed until I stood up again.</p>
+      <p class="line">That means more than I ever said.</p>
+      <p class="line">You matter—more than you know.</p>
+      <p class="line">Wishing the happiest 16 to the sweetest girl.</p>
+      <p class="signature">from Nikunj</p>
+      <button id="proceed" onclick="showGallery()">Tap to see some beautiful memories💖</button>
+    </div>
+  </section>
+
+  <!--–––– Gallery Page ––––-->
+  <section id="galleryPage" class="hidden">
+    <h1>Heartbeats in Frames 💫📸</h1>
+    <div class="gallery">
+      <!-- YOUR MEDIA PLACEHOLDERS -->
+      <div class="media"><img src="path/to/img1.jpg" alt=""></div>
+      <div class="media"><img src="path/to/img2.jpg" alt=""></div>
+      <div class="media"><video src="path/to/vid1.mp4" controls muted></video></div>
+      <!-- add more as needed -->
+    </div>
+    <div class="nav">
+      <button onclick="backToLetter()">Back to Letter 🎁</button>
+    </div>
+  </section>
+
+  <script>
+    // Sparkles
+    const parts = document.querySelector('#giftPage .particles');
+    for(let i=0;i<50;i++){
+      const s = document.createElement('span');
+      s.textContent='✨';
+      s.style.left=`${Math.random()*100}%`;
+      s.style.fontSize=`${8+Math.random()*24}px`;
+      s.style.animationDelay=`${Math.random()*5}s`;
+      parts.append(s);
+    }
+
+    // Shared
+    const audio    = document.getElementById('bg');
+    const lines    = document.querySelectorAll('#giftPage .line');
+    const letter   = document.getElementById('letter');
+    const proceed  = document.getElementById('proceed');
+    const gift     = document.getElementById('gift');
+    const giftPage = document.getElementById('giftPage');
+    const gallery  = document.getElementById('galleryPage');
+
+    function startLetter(){
+      gift.style.display='none';
+      audio.play().catch(()=>{});
+      letter.style.opacity=1;
+      lines.forEach((ln,i)=> setTimeout(
+        ()=> ln.classList.add('visible'), i*1500
+      ));
+      setTimeout(()=> proceed.classList.add('visible'),
+        lines.length*1500+500);
+    }
+
+    function showGallery(){
+      giftPage.classList.add('hidden');
+      gallery.classList.remove('hidden');
+    }
+    function backToLetter(){
+      gallery.classList.add('hidden');
+      giftPage.classList.remove('hidden');
+      // (optional) reset lines & button here if you want replay behavior
+    }
+  </script>
+</body>
+</html>
