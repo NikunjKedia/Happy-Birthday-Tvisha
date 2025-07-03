@@ -13,7 +13,7 @@
     html, body {
       width: 100%; height: 100%;
       font-family: 'Quicksand', sans-serif;
-      overflow-x: hidden;    /* allow vertical scroll */
+      overflow-x: hidden;
       overflow-y: auto;
       background: #f0f0f0;
     }
@@ -55,9 +55,7 @@
     #gift {
       font-size: clamp(4rem, 20vw, 12rem);
       animation: bounce 2s ease infinite;
-      cursor: pointer;
-      user-select: none;
-      z-index: 2;
+      cursor: pointer; user-select: none; z-index: 2;
     }
     @keyframes bounce {
       50% { transform: translateY(-2vh) }
@@ -67,8 +65,8 @@
     #letter {
       position: absolute;
       max-width: clamp(300px, 80vw, 600px);
-      max-height: 85vh;                /* ensure it never exceeds viewport */
-      overflow-y: auto;                /* scroll internally if needed */
+      max-height: 85vh;
+      overflow-y: auto;
       background: linear-gradient(120deg, #fff0f5, #e6e6fa);
       border: 2px dashed #ffb6c1;
       border-radius: 12px;
@@ -81,7 +79,7 @@
     /*–––– Lines & Hearts ––––*/
     .line {
       position: relative;
-      display: block;                  /* each line on its own row */
+      display: block;
       overflow: hidden; white-space: nowrap;
       margin: 1rem 0;
       font-size: clamp(1rem, 3.5vw, 1.3rem);
@@ -134,15 +132,19 @@
       transition: transform 0.8s ease;
     }
 
-    /*–––– Mobile Adjustments ––––*/
+    /*–––– Mobile Fixes ––––*/
     @media (max-width: 480px) {
       #letter {
-        padding: 1rem;               /* extra breathing room */
+        padding: 1rem;
+        max-width: 95vw;    /* full‐width on small screens */
       }
       .line {
-        font-size: 1rem;             /* slightly smaller text */
-        margin: 0.8rem 0;            /* compact spacing */
+        font-size: 1rem;
+        margin: 0.8rem 0;
         line-height: 1.5;
+        white-space: normal;  /* allow wrapping */
+        overflow: visible;
+        border-right: none;   /* remove cursor line */
       }
     }
   </style>
