@@ -10,86 +10,146 @@
   />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0 }
-    html, body { width:100%; height:100%; overflow:hidden; font-family:'Quicksand',sans-serif; }
-
-    #giftPage {
-      position:relative; width:100%; height:100%;
-      display:flex; align-items:center; justify-content:center;
-      padding:1rem;
-      background: linear-gradient(135deg,#fbc2eb,#a6c1ee,#fad0c4);
-      background-size:300% 300%; animation:bgShift 20s ease infinite;
-      text-align:center;
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Quicksand', sans-serif;
+      overflow-x: hidden;    /* allow vertical scroll */
+      overflow-y: auto;
+      background: #f0f0f0;
     }
-    @keyframes bgShift { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
 
+    /*–––– Gift Page ––––*/
+    #giftPage {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee, #fad0c4);
+      background-size: 300% 300%;
+      animation: bgShift 20s ease infinite;
+      text-align: center;
+    }
+    @keyframes bgShift {
+      0%   { background-position: 0% 50% }
+      50%  { background-position: 100% 50% }
+      100% { background-position: 0% 50% }
+    }
+
+    /*–––– Sparkles ––––*/
     .particles, .particles span {
-      position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
     }
     .particles span {
-      color:rgba(255,255,255,0.8);
-      animation:floatUp 7s linear infinite;
+      color: rgba(255,255,255,0.8);
+      animation: floatUp 7s linear infinite;
     }
-    @keyframes floatUp {0%{transform:translateY(100vh) scale(0.3);opacity:0}50%{opacity:1}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) scale(0.3); opacity: 0 }
+      50%  { opacity: 1 }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0 }
+    }
 
+    /*–––– Gift Icon ––––*/
     #gift {
-      font-size:clamp(4rem,20vw,12rem);
-      animation:bounce 2s ease infinite; cursor:pointer; user-select:none; z-index:2;
+      font-size: clamp(4rem, 20vw, 12rem);
+      animation: bounce 2s ease infinite;
+      cursor: pointer;
+      user-select: none;
+      z-index: 2;
     }
-    @keyframes bounce {50%{transform:translateY(-2vh)}}
+    @keyframes bounce {
+      50% { transform: translateY(-2vh) }
+    }
 
+    /*–––– Letter Box ––––*/
     #letter {
-      position:absolute;
-      max-width:clamp(300px,80vw,600px);
-      background: linear-gradient(120deg,#fff0f5,#e6e6fa);
-      border:2px dashed #ffb6c1; border-radius:12px;
-      box-shadow:0 8px 20px rgba(0,0,0,0.1);
-      padding:clamp(1rem,4vw,2rem);
-      opacity:0; transition:opacity .5s ease; pointer-events:none; z-index:2;
+      position: absolute;
+      max-width: clamp(300px, 80vw, 600px);
+      max-height: 85vh;                /* ensure it never exceeds viewport */
+      overflow-y: auto;                /* scroll internally if needed */
+      background: linear-gradient(120deg, #fff0f5, #e6e6fa);
+      border: 2px dashed #ffb6c1;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: clamp(1rem, 4vw, 2rem);
+      opacity: 0; transition: opacity 0.5s ease;
+      pointer-events: none; z-index: 2;
     }
 
-    /* ← KEY CHANGE: display:block so each <p> is on its own line */
+    /*–––– Lines & Hearts ––––*/
     .line {
       position: relative;
-      display: block;
+      display: block;                  /* each line on its own row */
       overflow: hidden; white-space: nowrap;
       margin: 1rem 0;
-      font-size: clamp(1rem,3.5vw,1.3rem);
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
       line-height: 1.6;
       opacity: 0; transform: translateY(20px);
       transition: opacity 0.8s ease, transform 0.8s ease;
-      border-right: 2px solid #333;
-      animation: typeIn 1s steps(40) forwards;
-      animation-delay: calc(var(--idx) * 1.5s);
     }
     .line.visible {
-      opacity:1; transform:translateY(0);
+      opacity: 1; transform: translateY(0);
     }
-    @keyframes typeIn { from { width: 0; } to { width: 100%; } }
-
     .line.visible::after {
-      content:'💖'; position:absolute; top:0; right:-1.5em;
-      opacity:0; transform:scale(0);
-      animation:popHeart .6s forwards; animation-delay:.3s;
+      content: '💖';
+      position: absolute; top: 0; right: -1.5em;
+      opacity: 0; transform: scale(0);
+      animation: popHeart 0.6s forwards;
+      animation-delay: 0.3s;
     }
-    @keyframes popHeart {0%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1.3)}100%{opacity:1;transform:scale(1)}}
+    @keyframes popHeart {
+      0%   { opacity: 0; transform: scale(0) }
+      50%  { opacity: 1; transform: scale(1.3) }
+      100% { opacity: 1; transform: scale(1) }
+    }
 
-    #confetti { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+    /*–––– Confetti ––––*/
+    #confetti {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; pointer-events: none;
+    }
     #confetti span {
-      position:absolute; width:8px; height:8px; background:#fff; opacity:.8;
-      animation:fall 3s linear forwards;
+      position: absolute; width: 8px; height: 8px;
+      background: #fff; opacity: 0.8;
+      animation: fall 3s linear forwards;
     }
-    @keyframes fall { to { transform: translate(var(--dx,0),100vh) rotate(var(--rot,0)); opacity:0 } }
+    @keyframes fall {
+      to {
+        transform: translate(var(--dx,0), 100vh)
+                   rotate(var(--rot,0));
+        opacity: 0;
+      }
+    }
 
+    /*–––– Signature ––––*/
     .signature {
-      display:block; margin-top:1rem;
-      font-family:'Pacifico',cursive; font-size:clamp(1rem,3vw,1.2rem);
-      color:#666; opacity:1; transform:translateY(10px);
-      transition:transform .8s ease;
+      display: block;
+      margin-top: 1rem;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: #666;
+      opacity: 1; transform: translateY(10px);
+      transition: transform 0.8s ease;
+    }
+
+    /*–––– Mobile Adjustments ––––*/
+    @media (max-width: 480px) {
+      #letter {
+        padding: 1rem;               /* extra breathing room */
+      }
+      .line {
+        font-size: 1rem;             /* slightly smaller text */
+        margin: 0.8rem 0;            /* compact spacing */
+        line-height: 1.5;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- looping background music -->
   <audio id="bg" src="instrumental-undertone.mp3" loop></audio>
 
   <div id="giftPage">
@@ -97,48 +157,59 @@
     <div id="confetti"></div>
     <div id="gift" onclick="startLetter()">🎁</div>
     <div id="letter">
-      <p class="line" style="--idx:0">Dear Tvisha,</p>
-      <p class="line" style="--idx:1">Thank you for calming me when I cried.</p>
-      <p class="line" style="--idx:2">You stayed until I stood up again.</p>
-      <p class="line" style="--idx:3">That means more than I ever said.</p>
-      <p class="line" style="--idx:4">You matter—more than you know.</p>
-      <p class="line" style="--idx:5">Wishing the happiest 16 to the sweetest girl.</p>
+      <p class="line">Dear Tvisha,</p>
+      <p class="line">Thank you for calming me when I cried.</p>
+      <p class="line">You stayed until I stood up again.</p>
+      <p class="line">That means more than I ever said.</p>
+      <p class="line">You matter—more than you know.</p>
+      <p class="line">Wishing the happiest 16 to the sweetest girl.</p>
       <p class="signature">from Nikunj</p>
     </div>
   </div>
 
   <script>
+    // Sparkles
     const parts = document.querySelector('.particles');
-    for (let i=0;i<50;i++){
-      const s=document.createElement('span');
-      s.textContent='✨';
-      s.style.left=`${Math.random()*100}%`;
-      s.style.fontSize=`${8+Math.random()*24}px`;
-      s.style.animationDelay=`${Math.random()*5}s`;
+    for (let i = 0; i < 50; i++) {
+      const s = document.createElement('span');
+      s.textContent = '✨';
+      s.style.left = `${Math.random() * 100}%`;
+      s.style.fontSize = `${8 + Math.random() * 24}px`;
+      s.style.animationDelay = `${Math.random() * 5}s`;
       parts.append(s);
     }
-    function launchConfetti(){
-      const c=document.getElementById('confetti');
-      for(let i=0;i<60;i++){
-        const d=document.createElement('span');
-        d.style.setProperty('--dx',`${(Math.random()-0.5)*100}vw`);
-        d.style.setProperty('--rot',`${Math.random()*360}deg`);
-        d.style.left=`${Math.random()*100}vw`;
-        d.style.background=`hsl(${Math.random()*360},80%,70%)`;
-        c.append(d);
-        setTimeout(()=>d.remove(),3000);
+
+    // Confetti launcher
+    function launchConfetti() {
+      const c = document.getElementById('confetti');
+      for (let i = 0; i < 60; i++) {
+        const dot = document.createElement('span');
+        dot.style.setProperty('--dx', `${(Math.random()-0.5)*100}vw`);
+        dot.style.setProperty('--rot', `${Math.random()*360}deg`);
+        dot.style.left = `${Math.random()*100}vw`;
+        dot.style.background = `hsl(${Math.random()*360},80%,70%)`;
+        c.append(dot);
+        setTimeout(() => dot.remove(), 3000);
       }
     }
-    const audio=document.getElementById('bg');
-    const gift=document.getElementById('gift');
-    const letter=document.getElementById('letter');
-    const lines=document.querySelectorAll('.line');
-    function startLetter(){
-      gift.style.display='none';
-      audio.play().catch(()=>{});
-      letter.style.opacity=1;
-      lines.forEach((ln,i)=>setTimeout(()=>ln.classList.add('visible'),i*1500));
-      setTimeout(launchConfetti,lines.length*1500+800);
+
+    // Letter reveal
+    const audio  = document.getElementById('bg');
+    const gift   = document.getElementById('gift');
+    const letter = document.getElementById('letter');
+    const lines  = document.querySelectorAll('.line');
+
+    function startLetter() {
+      gift.style.display = 'none';
+      audio.play().catch(() => {});
+      letter.style.opacity = 1;
+
+      lines.forEach((ln, i) => {
+        setTimeout(() => ln.classList.add('visible'), i * 1500);
+      });
+
+      // fire confetti after last line
+      setTimeout(launchConfetti, lines.length * 1500 + 800);
     }
   </script>
 </body>
